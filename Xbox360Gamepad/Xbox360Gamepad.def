@@ -1,0 +1,6 @@
+LIBRARY   Xbox360Gamepad
+EXPORTS
+   NEXInputGetState				@1
+   NEXInputSetState				@2
+   NEXInputGetInfo				@3
+   NEXInputPowerOff				@4
