@@ -48,7 +48,7 @@ typedef struct _NEX_OUTPUT_STATE
 {
 	WORD								LeftMotorSpeed;
 	WORD								RightMotorSpeed;
-	bool								UseLed;
+	BYTE								LEDBrightness;
 	BYTE								LEDRed;
 	BYTE								LEDGreen;
 	BYTE								LEDBlue;
