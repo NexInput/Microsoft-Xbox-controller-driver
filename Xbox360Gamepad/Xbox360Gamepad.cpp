@@ -1,5 +1,4 @@
-﻿#include "stdafx.h"
-#include <atlstr.h> 
+﻿#include <atlstr.h> 
 
 #define DLLEXPORT extern "C" __declspec(dllexport)
 
@@ -29,6 +28,17 @@
 #define ERROR_DEVICE_NOT_CONNECTED		1
 #define ERROR_SUCCESS					0
 
+#define NEX_UNKNOWN_CONTROLLER			0;
+
+#define MICROSOFT_XBOX_360_CONTROLLER	1
+#define MICROSOFT_XBOX_ONE_CONTROLLER	2
+
+#define SONY_DUALSHOCK_3_CONTROLLER		26
+#define SONY_DUALSHOCK_4_CONTROLLER		27
+#define SONY_DUALSHOCK_5_CONTROLLER		28
+
+#define NINTENDO_SWITCH_PRO_CONTROLLER	51
+
 typedef struct _NEX_INPUT_STATE
 {
 	WORD								Buttons;
@@ -38,7 +48,6 @@ typedef struct _NEX_INPUT_STATE
 	SHORT								AxisLY;
 	SHORT								AxisRX;
 	SHORT								AxisRY;
-	bool								SupportRotation;
 	float								Yaw;
 	float								Pitch;
 	float								Roll;
@@ -54,21 +63,12 @@ typedef struct _NEX_OUTPUT_STATE
 	BYTE								LEDBlue;
 } NEX_OUTPUT_STATE, *PNEX_OUTPUT_STATE;
 
-#define NEX_UNKNOWN_CONTROLLER			0;
-
-#define MICROSOFT_XBOX_360_CONTROLLER	1;
-#define MICROSOFT_XBOX_ONE_CONTROLLER	2;
-
-#define SONY_DUALSHOCK_3_CONTROLLER		26;
-#define SONY_DUALSHOCK_4_CONTROLLER		27;
-
-#define NINTENDO_SWITCH_PRO_CONTROLLER	51;
-
 typedef struct _NEX_CONTROLLER_INFO
 {
 	WORD								ControllerType;
 	BYTE								ConnectType;
 	BYTE								BatteryLevel;
+	bool								SupportRotation;
 } NEX_CONTROLLER_INFO, *PNEX_CONTROLLER_INFO;
 
 //Xbox 360 controller
@@ -165,8 +165,6 @@ DLLEXPORT DWORD __stdcall NEXInputGetState(__in DWORD dwUserIndex, __out NEX_INP
 	pState->Pitch = 0;
 	pState->Roll = 0;
 
-	pState->SupportRotation = false;
-
 	DWORD myStatus = ERROR_DEVICE_NOT_CONNECTED;
 
 	if (hDll != NULL)
@@ -206,6 +204,8 @@ DLLEXPORT DWORD __stdcall NEXInputGetInfo(__in DWORD dwUserIndex, __out NEX_CONT
 	pControllerInfo->ControllerType = MICROSOFT_XBOX_360_CONTROLLER;
 	pControllerInfo->ConnectType = NEX_CONTROLLER_WIRED;
 	pControllerInfo->BatteryLevel = NEX_BATTERY_NONE;
+
+	pControllerInfo->SupportRotation = false;
 
 	DWORD myStatus = ERROR_DEVICE_NOT_CONNECTED;
 
