@@ -1,4 +1,4 @@
-LIBRARY   Xbox360Gamepad
+LIBRARY   XboxGamepad
 EXPORTS
    NEXInputGetState				@1
    NEXInputSetState				@2
